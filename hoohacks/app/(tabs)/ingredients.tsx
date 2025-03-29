@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions, Platform } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions, Platform, Image } from "react-native";
 import { useRouter } from "expo-router";
 
-// Set fixed dimensions
 const SCREEN_WIDTH = 393;
 const SCREEN_HEIGHT = 852;
 
@@ -43,7 +42,7 @@ export default function IngredientsScreen() {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Select what ingredients you have:</Text>
+            <Text style={styles.title}>Select ingredients:</Text>
 
             <View style={styles.buttonContainer}>
                 <TouchableOpacity
@@ -53,12 +52,20 @@ export default function IngredientsScreen() {
                     <Text style={[styles.buttonText, ingredients.hotdog && styles.buttonTextActive]}>
                         Hot dog
                     </Text>
+                    <Image
+                        source={require('../../images/ingreds/Sausage.png')}
+                        style={styles.image}
+                    />
                 </TouchableOpacity>
 
                 <TouchableOpacity
                     style={[styles.button, ingredients.corn && styles.buttonActive]}
                     onPress={() => toggleIngredient('corn')}
                 >
+                    <Image
+                        source={require('../../images/ingreds/corn.png')}
+                        style={styles.image}
+                    />
                     <Text style={[styles.buttonText, ingredients.corn && styles.buttonTextActive]}>
                         Corn
                     </Text>
@@ -68,6 +75,10 @@ export default function IngredientsScreen() {
                     style={[styles.button, ingredients.potato && styles.buttonActive]}
                     onPress={() => toggleIngredient('potato')}
                 >
+                    <Image
+                        source={require('../../images/ingreds/Potato.png')}
+                        style={styles.image}
+                    />
                     <Text style={[styles.buttonText, ingredients.potato && styles.buttonTextActive]}>
                         Potato
                     </Text>
@@ -127,10 +138,16 @@ const styles = StyleSheet.create({
     buttonText: {
         fontSize: 18,
         color: '#333',
+        marginTop: 5,  // Added spacing for text under the image
     },
     buttonTextActive: {
         color: 'white',
         fontWeight: 'bold',
+    },
+    image: {
+        width: 50,  // Adjust size as needed
+        height: 50,
+        marginBottom: 5,
     },
     continueButton: {
         backgroundColor: '#2196F3',
