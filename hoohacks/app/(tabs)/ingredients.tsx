@@ -3,26 +3,81 @@ import {
     View, Text, TouchableOpacity, StyleSheet, Dimensions, Platform, Image, ScrollView
 } from "react-native";
 import { useRouter } from "expo-router";
+import { Audio } from 'expo-av';
 
 const SCREEN_WIDTH = 393;
 const SCREEN_HEIGHT = 852;
 
 const ingredientsList = [
-    { name: 'hotdog', label: 'Hot Dog', image: require('../../images/ingreds/Sausage.png') },
     { name: 'corn', label: 'Corn', image: require('../../images/ingreds/corn.png') },
     { name: 'potato', label: 'Potato', image: require('../../images/ingreds/Potato.png') },
-    // Add more ingredients here...
+    { name: 'bok_choy', label: 'Bok Choy', image: require('../../images/ingreds/Bok_Choy.png') },
+    { name: 'bread', label: 'Bread', image: require('../../images/ingreds/Bread.png') },
+    { name: 'lettuce', label: 'Lettuce', image: require('../../images/ingreds/Lettuce.png') },
+    { name: 'broccoli', label: 'Broccoli', image: require('../../images/ingreds/Broccoli.png') },
+    { name: 'carrot', label: 'Carrot', image: require('../../images/ingreds/Carrot.png') },
+    { name: 'cauliflower', label: 'Cauliflower', image: require('../../images/ingreds/Cauliflower.png') },
+    { name: 'flour', label: 'Flour', image: require('../../images/ingreds/Flour.png') },
+    { name: 'mayo', label: 'Mayonnaise', image: require('../../images/ingreds/Mayonnaise.png') },
+    { name: 'hotdog', label: 'Hot Dog', image: require('../../images/ingreds/Sausage.png') },
+    { name: 'cheese', label: 'Cheese', image: require('../../images/ingreds/Cheese.png') },
+    { name: 'egg', label: 'Egg', image: require('../../images/ingreds/Egg.png') },
+    { name: 'garlic', label: 'Garlic', image: require('../../images/ingreds/Garlic.png') },
+    { name: 'chicken', label: 'Chicken', image: require('../../images/ingreds/Chicken.png') },
+    { name: 'milk', label: 'Milk', image: require('../../images/ingreds/Milk.png') },
+    { name: 'eggplant', label: 'Eggplant', image: require('../../images/ingreds/Eggplant.png') },
+    { name: 'green bean', label: 'Green Bean', image: require('../../images/ingreds/Green_Bean.png') },
+    { name: 'green pickes', label: 'Green Pickles', image: require('../../images/ingreds/Green_Pickles.png') },
+    { name: 'hot pepper', label: 'Hot Pepper', image: require('../../images/ingreds/Hot_Pepper.png') },
+    { name: 'mushroom', label: 'Mushroom', image: require('../../images/ingreds/Mushroom.png') },
+    { name: 'onion', label: 'Onion', image: require('../../images/ingreds/Onion.png') },
+    { name: 'butter', label: 'Butter', image: require('../../images/ingreds/Butter.png') },
+    { name: 'radish', label: 'Radish', image: require('../../images/ingreds/Radish.png') },
+    { name: 'red cabbage', label: 'Red Cabbage', image: require('../../images/ingreds/Red_Cabbage.png') },
+    { name: 'rice', label: 'Rice', image: require('../../images/ingreds/Rice.png') },
+    { name: 'squash', label: 'Squash', image: require('../../images/ingreds/Squash.png') },
+    { name: 'tomato', label: 'Tomato', image: require('../../images/ingreds/Tomato.png') },
+    { name: 'tortilla', label: 'Tortilla', image: require('../../images/ingreds/Tortilla.png') },
 ];
 
 export default function IngredientsScreen() {
     const router = useRouter();
+
+    //plays sound on click
+    const playSound = async () => {
+        try {
+            console.log("Loading sound...");
+            const {sound} = await Audio.Sound.createAsync(
+                require('../../sounds/click.wav'),
+                { shouldPlay: true }
+            );
+
+            console.log("Playing sound...");
+            await sound.playAsync();
+
+            sound.setOnPlaybackStatusUpdate(status => {
+                if ('didJustFinish' in status &&  status.didJustFinish) {
+                    console.log("Sound finished playing");
+                    sound.unloadAsync();
+                }
+            });
+        } catch (error) {
+            console.error("Error playing sound:", error);
+        }
+    };
+
+    const handleSound = async () => {
+        await playSound(); // play sound when button is clicked
+        router.push("/preference");
+    };
 
     // State for toggling ingredients
     const [ingredients, setIngredients] = useState(
         ingredientsList.reduce((acc, item) => ({ ...acc, [item.name]: false }), {})
     );
 
-    const toggleIngredient = (ingredient) => {
+    const toggleIngredient = (ingredient: string) => {
+        playSound();
         setIngredients(prevState => ({
             ...prevState,
             [ingredient]: !prevState[ingredient]
@@ -47,17 +102,21 @@ export default function IngredientsScreen() {
             <Text style={styles.title}>Select ingredients:</Text>
 
             <ScrollView contentContainerStyle={styles.scrollContainer}>
-                {ingredientsList.map((item) => (
-                    <TouchableOpacity
-                        key={item.name}
-                        style={[styles.button, ingredients[item.name] && styles.buttonActive]}
-                        onPress={() => toggleIngredient(item.name)}
-                    >
-                        <Image source={item.image} style={styles.image} />
-                        <Text style={[styles.buttonText, ingredients[item.name] && styles.buttonTextActive]}>
-                            {item.label}
-                        </Text>
-                    </TouchableOpacity>
+                {Array.from({ length: Math.ceil(ingredientsList.length / 3) }, (_, rowIndex) => (
+                    <View key={rowIndex} style={styles.row}>
+                        {ingredientsList.slice(rowIndex * 3, rowIndex * 3 + 3).map((item) => (
+                            <TouchableOpacity
+                                key={item.name}
+                                style={[styles.button, ingredients[item.name] && styles.buttonActive]}
+                                onPress={() => toggleIngredient(item.name)}
+                            >
+                                <Image source={item.image} style={styles.image} />
+                                <Text style={[styles.buttonText, ingredients[item.name] && styles.buttonTextActive]}>
+                                    {item.label}
+                                </Text>
+                            </TouchableOpacity>
+                        ))}
+                    </View>
                 ))}
             </ScrollView>
 
@@ -74,19 +133,27 @@ const styles = StyleSheet.create({
         width: SCREEN_WIDTH,
         height: SCREEN_HEIGHT,
         padding: 20,
+        backgroundColor: '#FFFACD',
     },
     title: {
         fontSize: 24,
         marginBottom: 20,
         textAlign: 'center',
         fontWeight: 'bold',
+        fontFamily: Platform.OS === 'ios' ? 'Comic Sans MS' : 'ComicSansMS',
     },
     scrollContainer: {
         alignItems: 'center',
         paddingBottom: 100, // Ensures scrolling space
     },
+    row: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
+        marginBottom: 10,
+    },
     button: {
-        backgroundColor: '#f0f0f0',
+        backgroundColor: '#ADD8E6',
         padding: 0,
         borderRadius: 10,
         width: '25%',
@@ -96,13 +163,15 @@ const styles = StyleSheet.create({
         borderColor: '#ddd',
     },
     buttonActive: {
-        backgroundColor: '#4CAF50',
+        backgroundColor: '#6BADCE',
         borderColor: '#388E3C',
     },
     buttonText: {
         fontSize: 18,
         color: '#333',
+        alignItems: 'center',
         marginTop: 5,
+        fontFamily: Platform.OS === 'ios' ? 'Comic Sans MS' : 'ComicSansMS',
     },
     buttonTextActive: {
         color: 'white',
