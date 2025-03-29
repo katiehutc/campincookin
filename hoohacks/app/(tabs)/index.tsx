@@ -1,6 +1,6 @@
 // Example for ingredients.tsx
 import React from 'react';
-import {View, Text, Button, ImageBackground, StyleSheet} from "react-native";
+import {View, Text, ImageBackground, StyleSheet, TouchableOpacity, Image} from "react-native";
 import { useRouter } from "expo-router";
 
 export default function Index() {
@@ -8,15 +8,15 @@ export default function Index() {
 
     return (
         <ImageBackground
-            source = {require('../../images/home.png')}
+            source = {require('../../images/home/home.png')}
             style = {styles.backgroundImage}
             resizeMode = "cover"
         >
             <View style = {styles.container}>
                 <Text style = {styles.title}> Home</Text>
-                <Button title="Start"
-                        onPress = {() => router.push("/ingredients")}
-                        />
+                <TouchableOpacity onPress={() => router.push("/ingredients")} style={styles.button}>
+                    <Image source={require('../../images/home/start.png')} style={styles.buttonImage} />
+                </TouchableOpacity>
             </View>
         </ImageBackground>
     );
@@ -41,5 +41,13 @@ const styles = StyleSheet.create({
         textShadowColor: 'rgba(0, 0, 0, 0.75)',
         textShadowOffset: { width: -1, height: 1 },
         textShadowRadius: 10
-    }
+    },
+    button: {
+        marginTop: 20,
+    },
+    buttonImage: {
+        width: 256,
+        height: 256,
+        resizeMode: "contain",
+    },
 });
