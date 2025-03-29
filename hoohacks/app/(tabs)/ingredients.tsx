@@ -52,6 +52,10 @@ export default function IngredientsScreen() {
                     <Text style={[styles.buttonText, ingredients.hotdog && styles.buttonTextActive]}>
                         Hot dog
                     </Text>
+                    <Image
+                        source={require('../../images/ingreds/Sausage.png')}
+                        style={styles.image}
+                    />
                 </TouchableOpacity>
 
                 <TouchableOpacity
@@ -71,6 +75,10 @@ export default function IngredientsScreen() {
                     style={[styles.button, ingredients.potato && styles.buttonActive]}
                     onPress={() => toggleIngredient('potato')}
                 >
+                    <Image
+                        source={require('../../images/ingreds/Potato.png')}
+                        style={styles.image}
+                    />
                     <Text style={[styles.buttonText, ingredients.potato && styles.buttonTextActive]}>
                         Potato
                     </Text>
