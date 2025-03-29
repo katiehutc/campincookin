@@ -1,0 +1,7 @@
+.home-container {
+    background-image: url('../assets/images/cooking-campin-home.PNG');
+    background-size: cover;
+    background-position: center;
+    width: 100vw;
+    height: 100vh;
+}
