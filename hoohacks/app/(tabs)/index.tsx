@@ -8,7 +8,7 @@ export default function Index() {
 
     return (
         <ImageBackground
-            source = {require('./cooking-campin-home.PNG')}
+            source = {require('../../images/home.png')}
             style = {styles.backgroundImage}
             resizeMode = "cover"
         >
