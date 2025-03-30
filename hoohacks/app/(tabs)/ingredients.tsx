@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
         borderColor: '#388E3C',
     },
     buttonText: {
-        fontSize: 18,
+        fontSize: 16,
         color: '#333',
         alignItems: 'center',
         textAlign: 'center',
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
         bottom: 30,
     },
     continueButtonImage: {
-        width: '100%',
+        width: '150%',
         height: undefined,
         aspectRatio: 3,
         resizeMode: 'contain',
