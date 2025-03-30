@@ -1,10 +1,17 @@
 // Example for ingredients.tsx
-import React from 'react';
+import React, { useEffect } from 'react';
 import {View, Text, ImageBackground, StyleSheet, TouchableOpacity, Image} from "react-native";
-import { useRouter } from "expo-router";
+import { useRouter, useLocalSearchParams } from "expo-router";
 
 export default function Index() {
     const router = useRouter();
+    const params = useLocalSearchParams();
+
+    useEffect(() => {
+        if (params.reset) {
+            console.log("App was reset");
+        }
+    }, [params.reset]);
 
     return (
         <ImageBackground

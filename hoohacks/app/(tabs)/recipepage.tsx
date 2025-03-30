@@ -1,6 +1,8 @@
 import React from 'react';
 import {Text, StyleSheet, ScrollView, Button, Image, TouchableOpacity, ImageBackground} from 'react-native';
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter, Redirect } from 'expo-router';
+//npx expo install expo-updates
+import * as Updates from 'expo-updates';
 
 const SCREEN_WIDTH = 393;
 const SCREEN_HEIGHT = 852;
@@ -11,6 +13,17 @@ export default function RecipePageScreen() {
     const recipe = params.recipe ? JSON.parse(params.recipe as string) : null;
 
     if (!recipe) return <Text>No recipe found.</Text>;
+
+    const handleRestart = async () => {
+        try {
+
+            await Updates.reloadAsync();
+        } catch (error) {
+            console.error("Failed to reload app:", error);
+            
+            router.navigate("/");
+        }
+    };
 
     return (
         <ImageBackground
@@ -45,6 +58,14 @@ export default function RecipePageScreen() {
                 />
             </TouchableOpacity>
 
+            <TouchableOpacity onPress={handleRestart}>
+                <Image
+                    source={require('../../images/restart.png')}
+                    style={styles.restartButton}
+                />
+            </TouchableOpacity>
+
+
         </ScrollView>
         </ImageBackground>
     );
@@ -64,5 +85,11 @@ const styles = StyleSheet.create({
         width: 100,
         height: 100,
         marginTop: 10,
-    }
+    },
+    restartButton:
+        {
+            width: 100,
+            height: 100,
+            marginTop: 0,
+        }
 });
