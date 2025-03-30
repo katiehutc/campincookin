@@ -12,17 +12,18 @@ export default function RecipePageScreen() {
     return (
         <ScrollView contentContainerStyle={styles.container}>
             <Text style={styles.title}>{recipe.title}</Text>
-            <Text style={styles.detail}>Cooking Time: {recipe.cooking_time}</Text>
+            <Text style={styles.detail}>Calories: {recipe.calories || 'Not available'}</Text>
+            <Text style={styles.detail}>Cooking Time: {recipe.cookingTime}</Text>
 
             <Text style={styles.sectionTitle}>Ingredients:</Text>
-            {recipe.ingredients.map((ingredient: any, index: number) => (
+            {recipe.ingredients.map((ingredient, index) => (
                 <Text key={index} style={styles.text}>
-                    • {ingredient.quantity} {ingredient.item}
+                    • {ingredient}
                 </Text>
             ))}
 
             <Text style={styles.sectionTitle}>Instructions:</Text>
-            {recipe.instructions.map((instruction: string, index: number) => (
+            {recipe.instructions.map((instruction, index) => (
                 <Text key={index} style={styles.text}>
                     {index + 1}. {instruction}
                 </Text>
