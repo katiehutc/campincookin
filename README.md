@@ -7,10 +7,10 @@ Campfire Cook is a camping-friendly recipe generator designed for outdoor enthus
 ### 🌟 Features
 - **Ingredient Selection:** Choose from 30 different ingredients to customize your recipes.
 - **AI-Powered Recipes:** The app leverages **Google Gemini API** to generate creative and nutritious meal ideas.
-- **Hand-Drawn Pixel Art:** A mix of original hand-drawn pixel art and artwork inspired by Stardew Valley (some assets are directly from Stardew Valley).
+- **Hand-Drawn Pixel Art:** Our app features a mix of original hand-drawn pixel art, animations, and backgrounds inspired by Stardew Valley (most ingredient icons are directly from Stardew Valley).
 - **Built with React Native:** Cross-platform functionality so you can use the app anywhere!
 
-### 📸 Screenshots / Our Demo
+### 📸 Devpost Submission Link
 *(Coming Soon!)*
 
 ### 🚀 Getting Started
