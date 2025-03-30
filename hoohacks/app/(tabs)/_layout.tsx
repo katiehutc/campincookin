@@ -1,4 +1,5 @@
 // app/_layout.tsx - Tab-based layout
+
 import { Tabs } from 'expo-router';
 import { useColorScheme } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
@@ -32,6 +33,7 @@ export default function TabLayout() {
                 name="ingredients"
                 options={{
                     title: 'Ingredients',
+                    headerShown: false,
                     tabBarIcon: ({ color, size }) => (
                         <Ionicons name="list" size={size} color={color} />
                     ),
@@ -41,6 +43,7 @@ export default function TabLayout() {
                 name="recipelist"
                 options={{
                     title: 'Recipes',
+                    headerShown: false,
                     tabBarIcon: ({ color, size }) => (
                         <Ionicons name="restaurant" size={size} color={color} />
                     ),
@@ -50,6 +53,7 @@ export default function TabLayout() {
                 name="preference"
                 options={{
                     title: 'Preferences',
+                    headerShown: false,
                     tabBarIcon: ({ color, size }) => (
                         <Ionicons name="settings" size={size} color={color} />
                     ),

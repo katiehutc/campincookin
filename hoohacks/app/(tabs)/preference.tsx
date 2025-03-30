@@ -125,13 +125,6 @@ export default function PreferenceScreen() {
             }}>
                 <Image source={require('../../images/home/unique.jpg')} style={styles.buttonImage}/>
             </TouchableOpacity>
-
-            <TouchableOpacity style={styles.continueButton} onPress={() => {
-                playSound();
-                //handleContinue();
-            }}>
-                <Image source={require('../../images/home/continue.png')} style={styles.continueButtonImage}/>
-            </TouchableOpacity>
         </View>
     );
 }

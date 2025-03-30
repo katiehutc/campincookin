@@ -41,9 +41,10 @@ export default function RecipePageScreen() {
 }
 
 const styles = StyleSheet.create({
-    container: { padding: 20, alignItems: 'center' },
-    title: { fontSize: 28, fontWeight: 'bold', textAlign: 'center', marginBottom: 10 },
-    detail: { fontSize: 18, fontWeight: 'bold', marginBottom: 5 },
-    sectionTitle: { fontSize: 22, fontWeight: 'bold', marginTop: 10 },
-    text: { fontSize: 16, marginVertical: 2 },
+    container: { padding: 20, alignItems: 'center' , backgroundColor: '#FFB5B5FF',},
+    title: { fontSize: 28, fontWeight: 'bold', textAlign: 'center', marginBottom: 10 , fontFamily: 'Comic Sans MS',  color: '#6BADCE'},
+    detail: { fontSize: 18, fontWeight: 'bold', marginBottom: 5 , fontFamily: 'Comic Sans MS',  color: '#6BADCE'},
+    sectionTitle: { fontSize: 22, fontWeight: 'bold', marginTop: 10 , fontFamily: 'Comic Sans MS',  color: '#6BADCE'},
+    text: { fontSize: 16, marginVertical: 2, fontFamily: 'Comic Sans MS', color: '#6BADCE'},
+
 });
