@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Button } from 'react-native';
+import {Text, StyleSheet, ScrollView, Button } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 
 export default function RecipePageScreen() {
