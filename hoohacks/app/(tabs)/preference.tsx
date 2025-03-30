@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Platform, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Platform, TouchableOpacity, Image} from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 
 const SCREEN_WIDTH = 393;
@@ -7,7 +7,6 @@ const SCREEN_HEIGHT = 852;
 
 export default function PreferenceScreen() {
     const router = useRouter();
-
     const params = useLocalSearchParams();
 
     //Selected ingredients
@@ -22,6 +21,29 @@ export default function PreferenceScreen() {
         type3: false
     });
 
+    //plays sound on click
+    const playSound = async () => {
+        try {
+            console.log("Loading sound...");
+            const {sound} = await Audio.Sound.createAsync(
+                require('../../sounds/click.wav'),
+                {shouldPlay: true}
+            );
+
+            console.log("Playing sound...");
+            await sound.playAsync();
+
+            sound.setOnPlaybackStatusUpdate(status => {
+                if ('didJustFinish' in status && status.didJustFinish) {
+                    console.log("Sound finished playing");
+                    sound.unloadAsync();
+                }
+            });
+        } catch (error) {
+            console.error("Error playing sound:", error);
+        }
+    };
+
     // Preference
     const toggleRecipeType = (type) => {
         const newState = {
@@ -34,15 +56,6 @@ export default function PreferenceScreen() {
         newState[type] = true;
         setRecipeType(newState);
     };
-
-    useEffect(() => {
-        // log
-        console.log("Received ingredients in preference screen:", ingredientsData);
-    }, []);
-
-    // selected ingredients (with value 1)
-    const selectedIngredients = Object.keys(ingredientsData)
-        .filter(key => ingredientsData[key] === 1);
 
     const handleGenerate = () => {
         //extract recipe type
@@ -69,62 +82,51 @@ export default function PreferenceScreen() {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Preferences</Text>
 
-            <View style={styles.card}>
-                <Text style={styles.subtitle}>Selected Ingredients:</Text>
+            <Image
+                source={require('../../images/home/Preferences3.jpg')}
+                style={styles.titleImage}
+                resizeMode="contain"
+            />
 
-                <ScrollView style={styles.scrollView}>
-                    {selectedIngredients.length > 0 ? (
-                        selectedIngredients.map((ingredient, index) => (
-                            <View key={index} style={styles.ingredientItem}>
-                                <Text style={styles.ingredientText}>
-                                    • {ingredient.charAt(0).toUpperCase() + ingredient.slice(1)}
-                                </Text>
-                            </View>
-                        ))
-                    ) : (
-                        <Text style={styles.noIngredients}>No ingredients selected</Text>
-                    )}
-                </ScrollView>
-            </View>
+            <Image
+                source={require('../../images/home/chooseRecipe.jpeg')}
+                style={styles.chooseImage}
+                resizeMode="contain"
+            />
 
-            <View style={styles.card}>
-                <Text style={styles.subtitle}>What kind of recipe would you like?</Text>
+            <View style={{ height: 30 }} />
 
-                <TouchableOpacity
-                    style={[styles.typeButton, recipeType.type1 && styles.typeButtonActive]}
-                    onPress={() => toggleRecipeType('type1')}
-                >
-                    <Text style={[styles.typeButtonText, recipeType.type1 && styles.typeButtonTextActive]}>
-                        Quick and Easy
-                    </Text>
-                </TouchableOpacity>
+            <TouchableOpacity style={[styles.button, recipeType.type1 && styles.typeButtonActive]} onPress={() => {
+                playSound();
+                toggleRecipeType('type1');
+            }}>
+                <Image source={require('../../images/home/quick.jpg')} style={styles.buttonImage}/>
+            </TouchableOpacity>
 
-                <TouchableOpacity
-                    style={[styles.typeButton, recipeType.type2 && styles.typeButtonActive]}
-                    onPress={() => toggleRecipeType('type2')}
-                >
-                    <Text style={[styles.typeButtonText, recipeType.type2 && styles.typeButtonTextActive]}>
-                        Healthy
-                    </Text>
-                </TouchableOpacity>
+            <View style={{ height: 10 }} />
 
-                <TouchableOpacity
-                    style={[styles.typeButton, recipeType.type3 && styles.typeButtonActive]}
-                    onPress={() => toggleRecipeType('type3')}
-                >
-                    <Text style={[styles.typeButtonText, recipeType.type3 && styles.typeButtonTextActive]}>
-                        Unique
-                    </Text>
-                </TouchableOpacity>
-            </View>
+            <TouchableOpacity style={[styles.button, recipeType.type2 && styles.typeButtonActive]} onPress={() => {
+                playSound();
+                toggleRecipeType('type2');
+            }}>
+                <Image source={require('../../images/home/healthy.jpg')} style={styles.buttonImage}/>
+            </TouchableOpacity>
 
-            <TouchableOpacity
-                style={styles.generateButton}
-                onPress={handleGenerate}
-            >
-                <Text style={styles.generateButtonText}>Generate Recipe!</Text>
+            <View style={{ height: 10 }} />
+
+            <TouchableOpacity style={[styles.button, recipeType.type3 && styles.typeButtonActive]} onPress={() => {
+                playSound();
+                toggleRecipeType('type3');
+            }}>
+                <Image source={require('../../images/home/unique.jpg')} style={styles.buttonImage}/>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.continueButton} onPress={() => {
+                playSound();
+                //handleContinue();
+            }}>
+                <Image source={require('../../images/home/continue.png')} style={styles.continueButtonImage}/>
             </TouchableOpacity>
         </View>
     );
@@ -141,12 +143,14 @@ const styles = StyleSheet.create({
                 maxHeight: SCREEN_HEIGHT,
                 alignSelf: 'center',
             }
-        })
+        }),
+        backgroundColor: '#FFB5B5FF',
     },
     title: {
         fontSize: 28,
         fontWeight: 'bold',
         marginBottom: 20,
+        fontFamily: Platform.OS === 'ios' ? 'Comic Sans MS' : 'ComicSansMS',
         textAlign: 'center',
     },
     card: {
@@ -163,6 +167,7 @@ const styles = StyleSheet.create({
     subtitle: {
         fontSize: 20,
         fontWeight: 'bold',
+        fontFamily: Platform.OS === 'ios' ? 'Comic Sans MS' : 'ComicSansMS',
         marginBottom: 15,
         color: '#333',
     },
@@ -180,7 +185,7 @@ const styles = StyleSheet.create({
     },
     noIngredients: {
         fontSize: 16,
-        fontStyle: 'italic',
+        fontFamily: Platform.OS === 'ios' ? 'Comic Sans MS' : 'ComicSansMS',
         color: '#888',
     },
     typeButton: {
@@ -193,12 +198,13 @@ const styles = StyleSheet.create({
         borderColor: '#ddd',
     },
     typeButtonActive: {
-        backgroundColor: '#FF9800',
+        backgroundColor: 'transparent',
         borderColor: '#F57C00',
     },
     typeButtonText: {
         fontSize: 16,
         color: '#333',
+        fontFamily: Platform.OS === 'ios' ? 'Comic Sans MS' : 'ComicSansMS',
     },
     typeButtonTextActive: {
         color: 'white',
@@ -215,5 +221,48 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         color: 'white',
-    }
+    },
+    titleImage:{
+        width: 381,
+        height: 223,
+        resizeMode: 'contain',
+        alignSelf: 'center'
+    },
+    chooseImage:{
+        width: 194,
+        height: 104,
+        resizeMode: 'contain',
+        alignSelf: 'center'
+    },
+    button: {
+        backgroundColor: 'transparent',
+        padding: 0,
+        borderRadius: 10,
+        width: '80%',
+        alignItems: 'center',
+        alignSelf: 'center',
+        bottom: 30,
+    },
+    buttonImage: {
+        width: 126,
+        height: 63,
+        aspectRatio: 3,
+        resizeMode: 'contain',
+    },
+    continueButton: {
+        backgroundColor: 'transparent',
+        padding: 0,
+        borderRadius: 10,
+        width: '80%',
+        alignItems: 'center',
+        alignSelf: 'center',
+        position: 'absolute',
+        bottom: 30,
+    },
+    continueButtonImage: {
+        width: '100%',
+        height: undefined,
+        aspectRatio: 3,
+        resizeMode: 'contain',
+    },
 });
