@@ -1,15 +1,18 @@
 // Example for ingredients.tsx
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {View, Text, ImageBackground, StyleSheet, TouchableOpacity, Image} from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
 
 export default function Index() {
     const router = useRouter();
     const params = useLocalSearchParams();
+    const [refreshKey, setRefreshKey] = useState(0);
 
     useEffect(() => {
-        if (params.reset) {
-            console.log("App was reset");
+        if (params.reset === "true") {
+            console.log("App was reset - clearing state");
+            setRefreshKey(prevKey => prevKey + 1); // Change key to force re-render
+            router.setParams({}); // Clear params
         }
     }, [params.reset]);
 
@@ -18,6 +21,7 @@ export default function Index() {
             source = {require('../../images/home/home.png')}
             style = {styles.backgroundImage}
             resizeMode = "cover"
+            key={refreshKey}
         >
             <View style = {styles.container}>
                 <TouchableOpacity onPress={() => router.push("/ingredients")} style={styles.button}>
