@@ -13,7 +13,6 @@ export default function Index() {
             resizeMode = "cover"
         >
             <View style = {styles.container}>
-                <Text style = {styles.title}> Home</Text>
                 <TouchableOpacity onPress={() => router.push("/ingredients")} style={styles.button}>
                     <Image source={require('../../images/home/start.png')} style={styles.buttonImage} />
                 </TouchableOpacity>

@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator, Button } from 'react-native';
+import {View, Text, StyleSheet, ActivityIndicator, Button, Image, Platform} from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { GoogleGenAI } from '@google/genai';
 import Constants from 'expo-constants';
+
+const SCREEN_WIDTH = 393;
+const SCREEN_HEIGHT = 852;
 
 const GEMINI_API_KEY = Constants.expoConfig?.extra?.geminiApiKey || "MYAPIKEY";
 const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
@@ -34,10 +37,23 @@ export default function GenerateScreen() {
             try {
                 const response = await ai.models.generateContent({
                     model: "gemini-2.0-flash",
-                    contents: `Generate 3 recipes that can be made while camping (minimal ingredients). 
-                               Include the title, calories, cooking time, ingredient list, and instructions. 
-                               The ingredients I have are ${selectedIngredientsString}, and I would like it to be ${recipeTypeText[recipeType]}. 
-                               Put it in JSON format.`
+                    contents: `Generate 3 recipes that can be made while camping with minimal ingredients. 
+               The ingredients I have are ${selectedIngredientsString}. 
+               Please include the following in your response: 
+               - Title of the recipe
+               - Calories (if available)
+               - Cooking time
+               - A **detailed list** of ingredients
+               - Step-by-step instructions
+               The recipe should be ${recipeTypeText[recipeType]}. 
+               Format the response in **JSON** with the following structure:
+               {
+                   "title": "Recipe Name",
+                   "calories": "Calories",
+                   "cookingTime": "Cooking time",
+                   "ingredients": ["ingredient1", "ingredient2", ...],
+                   "instructions": ["step1", "step2", ...]
+               }`
                 });
 
                 const rawText = response.text || "[]";
@@ -59,20 +75,47 @@ export default function GenerateScreen() {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Generating Recipes</Text>
             {loading ? (
-                <ActivityIndicator size="large" color="#0000ff" />
+                <View style={styles.view}>
+                <Text style={styles.title}>generating recipes!</Text>
+                <Image
+                    source={require('../../images/fire.gif')}
+                    style={styles.gif}
+                />
+                </View>
             ) : (
+                <View>
+                    <Text style={styles.title}>done!</Text>
                 <Button
+                    style = {styles.button}
                     title="View Recipes"
                     onPress={() => router.push({ pathname: "/recipelist", params: { recipes: JSON.stringify(recipes) } })}
                 />
+                </View>
             )}
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, padding: 20, justifyContent: 'center', alignItems: 'center' },
-    title: { fontSize: 28, fontWeight: 'bold', marginBottom: 20, textAlign: 'center' },
+    container: {
+        flex: 1,
+        width: SCREEN_WIDTH,
+        height: SCREEN_HEIGHT,
+        backgroundColor: '#322947FF',
+        padding: 20, justifyContent: 'center', alignItems: 'center' },
+    view: {
+        justifyContent: 'center',alignItems: 'center'
+    },
+    title: { fontSize: 28,  marginBottom: 20, textAlign: 'center',
+        fontFamily: Platform.OS === 'ios' ? 'Comic Sans MS' : 'ComicSansMS',
+    color: '#F2CA5CFF'},
+    gif: {
+        width: 100,
+        height: 100,
+    },
+    button:{
+        backgroundColor: '#F2CA5CFF',
+        fontFamily: Platform.OS === 'ios' ? 'Comic Sans MS' : 'ComicSansMS',
+    }
 });
