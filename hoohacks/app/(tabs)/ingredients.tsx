@@ -18,6 +18,7 @@ const ingredientsList = [
     { name: 'carrot', label: 'Carrot', image: require('../../images/ingreds/Carrot.png') },
     { name: 'cauliflower', label: 'Cauliflower', image: require('../../images/ingreds/Cauliflower.png') },
     { name: 'flour', label: 'Flour', image: require('../../images/ingreds/Flour.png') },
+    { name: 'spinach', label: 'Spinach', image: require('../../images/ingreds/Spinach.png') },
     { name: 'mayo', label: 'Mayonnaise', image: require('../../images/ingreds/Mayonnaise.png') },
     { name: 'hotdog', label: 'Hot Dog', image: require('../../images/ingreds/Sausage.png') },
     { name: 'cheese', label: 'Cheese', image: require('../../images/ingreds/Cheese.png') },
@@ -38,6 +39,7 @@ const ingredientsList = [
     { name: 'squash', label: 'Squash', image: require('../../images/ingreds/Squash.png') },
     { name: 'tomato', label: 'Tomato', image: require('../../images/ingreds/Tomato.png') },
     { name: 'tortilla', label: 'Tortilla', image: require('../../images/ingreds/Tortilla.png') },
+
 ];
 
 export default function IngredientsScreen() {
