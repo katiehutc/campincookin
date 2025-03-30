@@ -85,7 +85,7 @@ export default function GenerateScreen() {
                 </View>
             ) : (
                 <View  style={styles.view}>
-                    <Text style={styles.title}>done!</Text>
+
                     <TouchableOpacity
                         style={styles.buttonContainer}
                         onPress={() => router.push({ pathname: "/recipelist", params: { recipes: JSON.stringify(recipes) } })}
