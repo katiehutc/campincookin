@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Platform, TouchableOpacity, Image} from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet, Platform, TouchableOpacity, Image} from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
+import {Audio} from 'expo-av';
 
 const SCREEN_WIDTH = 393;
 const SCREEN_HEIGHT = 852;
@@ -100,6 +101,7 @@ export default function PreferenceScreen() {
             <TouchableOpacity style={[styles.button, recipeType.type1 && styles.typeButtonActive]} onPress={() => {
                 playSound();
                 toggleRecipeType('type1');
+                handleGenerate();
             }}>
                 <Image source={require('../../images/home/quick.jpg')} style={styles.buttonImage}/>
             </TouchableOpacity>
@@ -109,6 +111,7 @@ export default function PreferenceScreen() {
             <TouchableOpacity style={[styles.button, recipeType.type2 && styles.typeButtonActive]} onPress={() => {
                 playSound();
                 toggleRecipeType('type2');
+                handleGenerate();
             }}>
                 <Image source={require('../../images/home/healthy.jpg')} style={styles.buttonImage}/>
             </TouchableOpacity>
@@ -118,6 +121,7 @@ export default function PreferenceScreen() {
             <TouchableOpacity style={[styles.button, recipeType.type3 && styles.typeButtonActive]} onPress={() => {
                 playSound();
                 toggleRecipeType('type3');
+                handleGenerate();
             }}>
                 <Image source={require('../../images/home/unique.jpg')} style={styles.buttonImage}/>
             </TouchableOpacity>
