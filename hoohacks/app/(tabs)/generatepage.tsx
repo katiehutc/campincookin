@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {View, Text, StyleSheet, ActivityIndicator, Button, Image, Platform} from 'react-native';
+import {View, Text, StyleSheet, ActivityIndicator, Button, Image, TouchableOpacity, Platform} from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { GoogleGenAI } from '@google/genai';
 import Constants from 'expo-constants';
@@ -84,13 +84,17 @@ export default function GenerateScreen() {
                 />
                 </View>
             ) : (
-                <View>
+                <View  style={styles.view}>
                     <Text style={styles.title}>done!</Text>
-                <Button
-                    style = {styles.button}
-                    title="View Recipes"
-                    onPress={() => router.push({ pathname: "/recipelist", params: { recipes: JSON.stringify(recipes) } })}
-                />
+                    <TouchableOpacity
+                        style={styles.buttonContainer}
+                        onPress={() => router.push({ pathname: "/recipelist", params: { recipes: JSON.stringify(recipes) } })}
+                    >
+                        <Image
+                            source={require('../../images/recipesign.png')} // Adjust this path as needed
+                            style={styles.buttonImage}
+                        />
+                    </TouchableOpacity>
                 </View>
             )}
         </View>
@@ -114,8 +118,12 @@ const styles = StyleSheet.create({
         width: 100,
         height: 100,
     },
-    button:{
-        backgroundColor: '#F2CA5CFF',
-        fontFamily: Platform.OS === 'ios' ? 'Comic Sans MS' : 'ComicSansMS',
-    }
+    buttonContainer: {
+        marginTop: 1,
+    },
+    buttonImage: {
+        width: 400,
+        height: 250,
+        resizeMode: 'contain',
+    },
 });
