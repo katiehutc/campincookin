@@ -2,7 +2,7 @@
 
 ## 🏕️ Campin' Cookin': Your Outdoor Recipe Generator
 
-Campfire Cook is a camping-friendly recipe generator designed for outdoor enthusiasts! With a selection of 30 different ingredients, our app uses the **Google Gemini API** to generate unique, healthy, and simple recipes perfect for your next adventure.
+Campin' Cookin' is a camping-friendly recipe generator designed for outdoor enthusiasts! With a selection of 30 different ingredients, our app uses the **Google Gemini API** to generate unique, healthy, and simple recipes perfect for your next adventure.
 
 ### 🌟 Features
 - **Ingredient Selection:** Choose from 30 different ingredients to customize your recipes.
