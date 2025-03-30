@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Platform, TouchableOpacity, Image} from 'react-native';
+import {View, StyleSheet, Platform, TouchableOpacity, Image, ImageBackground} from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import {Audio} from 'expo-av';
 
@@ -82,19 +82,12 @@ export default function PreferenceScreen() {
     };
 
     return (
+        <ImageBackground
+            source={require('../../images/home/prefback.png')}
+            style={styles.container}
+        >
         <View style={styles.container}>
 
-            <Image
-                source={require('../../images/home/Preferences3.jpg')}
-                style={styles.titleImage}
-                resizeMode="contain"
-            />
-
-            <Image
-                source={require('../../images/home/chooseRecipe.jpeg')}
-                style={styles.chooseImage}
-                resizeMode="contain"
-            />
 
             <View style={{ height: 30 }} />
 
@@ -126,6 +119,7 @@ export default function PreferenceScreen() {
                 <Image source={require('../../images/home/unique.jpg')} style={styles.buttonImage}/>
             </TouchableOpacity>
         </View>
+        </ImageBackground>
     );
 }
 
@@ -141,7 +135,8 @@ const styles = StyleSheet.create({
                 alignSelf: 'center',
             }
         }),
-        backgroundColor: '#FFB5B5FF',
+        paddingTop: 200
+
     },
     title: {
         fontSize: 28,
