@@ -12,53 +12,14 @@ export default function TabLayout() {
     return (
         <Tabs
             screenOptions={{
-                tabBarActiveTintColor: '#007AFF',
-                tabBarStyle: { backgroundColor: bgColor },
-                tabBarLabelStyle: { fontSize: 12 },
-                headerStyle: { backgroundColor: bgColor },
-                headerTintColor: fgColor,
+                tabBarStyle: { display: 'none' }, // This hides the entire tab bar
+                headerShown: false, // This hides the header
             }}
         >
-            <Tabs.Screen
-                name="index"
-                options={{
-                    headerShown: false,
-                    tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="home" size={size} color={color} />
-                    ),
-                }}
-
-            />
-            <Tabs.Screen
-                name="ingredients"
-                options={{
-                    title: 'Ingredients',
-                    headerShown: false,
-                    tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="list" size={size} color={color} />
-                    ),
-                }}
-            />
-            <Tabs.Screen
-                name="recipelist"
-                options={{
-                    title: 'Recipes',
-                    headerShown: false,
-                    tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="restaurant" size={size} color={color} />
-                    ),
-                }}
-            />
-            <Tabs.Screen
-                name="preference"
-                options={{
-                    title: 'Preferences',
-                    headerShown: false,
-                    tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="settings" size={size} color={color} />
-                    ),
-                }}
-            />
+            <Tabs.Screen name="index" />
+            <Tabs.Screen name="ingredients" />
+            <Tabs.Screen name="recipelist" />
+            <Tabs.Screen name="preference" />
         </Tabs>
     );
 }
